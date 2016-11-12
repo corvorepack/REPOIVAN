@@ -1,0 +1,45 @@
+***********PORDEDE PELICULAS************************
+llamada:pordede_peli; NOM_PELI=1492-conquest-of-paradise
+
+
+
+***********PORDEDE SERIES************************
+llamada:pordede_series; NOM_SERIE=the-walking-dead
+
+
+
+***********VIMEO************************
+llamada:vimeo; COD_VIDEO=32417524
+
+
+
+***********BEIN SPORT************************
+llamada:beinsport; NOM_USER=castill0; CLAVE_USER=lolo
+
+
+
+***********ONEPLAY************************
+llamada:oneplay; NUM_CANAL=89
+
+
+
+***********STALKER************************
+llamada:stalker; NUM_CANAL=2459
+
+
+
+***********SERIESBLANCO************************
+llamada:seriesblanco; NOM_SERIE=the-walking-dead
+
+
+***********DAILYMOTION_LSP************************
+llamada:dailymotion_lsp; NOM_VIDEO=x3cfzwm_videojuegos-prohibidos-3-sakura-swim-club_videogames
+
+
+***********TUGOLEADA************************
+llamada:tugoleada; NUM_CANAL=1
+
+
+
+
+
