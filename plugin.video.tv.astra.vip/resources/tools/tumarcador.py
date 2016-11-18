@@ -47,7 +47,7 @@ url = "http://tumarcador.xyz"
 
 guia = "http://pastebin.com/raw/WsSGX20D"
 
-fich_hora = xbmc.translatePath(os.path.join('special://userdata/addon_data/plugin.video.palcotv/horario_tumarcador.txt'))
+fich_hora = xbmc.translatePath(os.path.join('special://userdata/addon_data/plugin.video.tv.astra.vip/horario_tumarcador.txt'))
 def tumarcador0(params):
 	
 	ruta_pro = xbmc.translatePath(os.path.join('special://home/userdata/addon_data/plugin.video.live.streamspro', ''))
