@@ -482,26 +482,21 @@ def powvideo(params):
     #Evitando Error si la url entra com embed-
     if 'embed' in page_url:
         id_vid = plugintools.find_single_match(page_url,'http://powvideo.net/embed-(.*?)-')
-        page_url = 'http://powvideo.net/'+id_vid
-        
+        page_url = 'http://powvideo.net/'+id_vid  
     try:
         if not "iframe" in page_url:
-            page_iframe = page_url.replace("http://powvideo.net/","http://powvideo.net/iframe-") + "-640x360.html"
-    
+            page_iframe = page_url.replace("http://powvideo.net/","http://powvideo.xyz/iframe-") + "-1920x920.html"
         ref = page_iframe.replace('iframe','embed')
         headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0','Referer': ref}
         r = requests.get(page_iframe,headers=headers)
         data = r.text
-    
         if not 'File was deleted' in data:
             data = plugintools.find_single_match(data,"eval\(function\(p,a,c,k,e,d\)(.*?)</script>")
             data = wiz.unpack(data)
         else:
             page_url = params.get("url")
-
             if not "preview" in page_url:
-                page_preview = page_url.replace("http://powvideo.net/","http://powvideo.net/preview-") + "-640x360.html"
-
+                page_preview = page_url.replace("http://powvideo.net/","http://powvideo.net/preview-") + "-1920x920.html"
             r = requests.get(page_preview)
             data = r.content
             ref = page_preview
@@ -511,20 +506,49 @@ def powvideo(params):
             data = r.text
             data = plugintools.find_single_match(data,"eval\(function\(p,a,c,k,e,d\)(.*?)</script>")
             data = wiz.unpack(data)
-    
+            #print data
         sources = plugintools.find_multiple_matches(data,"image:image,tracks:tracks,src:'(.*?)'")
+        #print sources
         if sources !="":
-            if 'mp4' in sources[-1]: media_url = sources[-1] #mp4
-            elif 'm3u8' in sources[-1]: media_url = sources[-1]+"|User-Agent="+headers['User-Agent'] #m3u8
-            #Ignoramos el rtmp
-            print '$'*40+'-  -'+'$'*40,media_url,'$'*99
-        else:
-            xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % ('Movies Ultra', "El Archivo no esta disponible", 3 , art+'icon.png'))
+            id_vid = plugintools.find_single_match(sources[-1],'(/[0-9a-z]([0-9a-z]{40,}))')
+            new_id = id_vid[-1]
+            url_options =[]
+            ### RTMP ###
+            try:
+                #rtmp://178.33.238.147:19350/vod/ playpath=mp4:01/00458/wzb1oas8oup3_n?h=hjmohokshjaikkfn2mdip2iyfg3yf62p3wkebwbae3tc7b55yvr7o75axr4 swfUrl=http://powvideo.net/player6/jwplayer.flash.swf pageUrl=http://powvideo.net/wzb1oas8oup3
+                #rtmp://5.39.69.236:19350/vod/mp4:01/00305/v6jql5rhtvvp_n?h=uj4ohomxypuikkfn2mav72isjhyr5amti4cdgn7vk72axekxvgbbwy7ldlm
+                swfurl = 'swfUrl=http://powvideo.net/player6/jwplayer.flash.swf'; pageurl = 'pageUrl='+page_iframe
+                url_rtmp = plugintools.find_single_match(sources[0],'(rtmp.*?=)')
+                url_rtmp = url_rtmp.replace('mp4:',' playpath=mp4:')+new_id
+                media_rtmp = url_rtmp+'|'+swfurl+'|'+pageurl
+                url_options.append(media_rtmp)
+            except:pass
+            ### M3U8 ###
+            try:
+                media_m3u8 = plugintools.find_single_match(sources[1],'(http://.*?/)')+new_id+'.m3u8|User-Agent='+headers['User-Agent']
+                url_options.append(media_m3u8)
+            except:pass
+            ### MP4 ###
+            try:
+                media_mp4 = media_url = plugintools.find_single_match(sources[2],'(http://.*?/)')+new_id+'/v.mp4'
+                url_options.append(media_mp4)
+            except:pass
+        if len(sources) >1:
+                options = []
+                opct = '[COLORlightyellow]Opcion rtmp[/COLOR]';options.append(opct)   
+                opct = '[COLORlightyellow]Opcion m3u8[/COLOR]';options.append(opct)  
+                opct = '[COLORlightyellow]Opcion mp4[/COLOR]';options.append(opct)
+                select_option = plugintools.selector(options,'Movies Ultra **Powvideo**')
+                ######### Evitamos el error de cancelacion con valor -1 ########
+                if select_option >=0:  
+                    i = select_option
+                    media_url = url_options[i]    
+                    print '$'*110+'- By Movies Ultra -'+'$'*110,media_url,'$'*239
+                    plugintools.play_resolved_url(media_url)
+                else: pass
     except:
         media_url=urlr(page_url)
-        print 'URLR',media_url
-       
-    plugintools.play_resolved_url(media_url)
+        print 'URLR',media_url 
 
 def mailru(params):
     plugintools.log('[%s %s] Mail.ru %s' % (addonName, addonVersion, repr(params)))
@@ -650,27 +674,21 @@ def gamovideo(params):
     plugintools.log('[%s %s] Gamovideo %s' % (addonName, addonVersion, repr(params)))
 
     page_url = params.get("url")
-
     try:
         r = requests.get(page_url)
         data = r.content
-
         if "File was deleted" in data or "File Not Found" in data:
             xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % ('Movies Ultra', "El Archivo no esta disponible", 3 , art+'icon.png'))
         else:
             bloq_vid = plugintools.find_single_match(data,"playlist: \[\{(.*?)</script>")
             if bloq_vid !="":
-                #http://94.23.216.171:8777/6qx23xz5fipskjwff77scahq3u5vio5iiqlk2pjctvpbjlons4ld7aa332tq/v.flv
-                host = plugintools.find_single_match(bloq_vid,'image: "(http://.*?/)')
                 bloq_file = plugintools.find_multiple_matches(bloq_vid,'file: "([^"]+)"')
-                filefull = bloq_file[-1].split('='); file_id = filefull[-1]
-                media_url = host + file_id + '/v.flv'
-                print '$'*38+'-  -'+'$'*38,media_url,'$'*95
+                media_url = bloq_file[-1]+'|Referer='+page_url
+                print '$'*68+'- By Movies Ultra -'+'$'*68,media_url,'$'*155
+                plugintools.play_resolved_url(media_url)  
     except:
         media_url=urlr(page_url)
         print 'URLR',media_url
-       
-    plugintools.play_resolved_url(media_url)
 
 def moevideos(params):
     plugintools.log('[%s %s] Moevideos %s' % (addonName, addonVersion, repr(params)))
@@ -1169,25 +1187,25 @@ def flashx(params):
     page_url = params.get("url")
     try:
         page_url = page_url.replace("http://www.flashx.tv/","http://www.flashx.tv/playvid-")#.replace('.html','')
-        headers = {'Host':'www.flashx.tv','User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0'}
+        headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0'}
         r = requests.get(page_url,headers=headers)
         data = r.content
         if 'You try to access this video with Kodi' in data:
             url = plugintools.find_single_match(data,'(http://www.flashx.tv/reload.*?)">')
             r = requests.get(url,headers=headers);data = r.content
             r = requests.get(page_url,headers=headers);data = r.content   
-        data = plugintools.find_single_match(data,"eval\(function\(p,a,c,k,e,d\)(.*?)</script>")
+        data = plugintools.find_single_match(data,"</table>.*?eval\(function\(p,a,c,k,e,d\)(.*?)</script>")
         data = wiz.unpack(data)
         media = plugintools.find_multiple_matches(data,'file:\"([^"]+)"')
         try:
             for item in media:
                 if "mp4" in item:
                         media_url = item.replace('\/','/')  
-                        print '$'*49+'- Movies Ultra -'+'$'*49,media_url,'$'*117
+                        print '$'*49+'- By Movies Ultra -'+'$'*49,media_url,'$'*117
                         plugintools.play_resolved_url(media_url)
                 elif "flv" in item:
                         media_url = item.replace('\/','/')  
-                        print '$'*49+'- Movies Ultra -'+'$'*49,media_url,'$'*117
+                        print '$'*49+'- By Movies Ultra -'+'$'*49,media_url,'$'*117
                         plugintools.play_resolved_url(media_url)
         except:
             xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % ('Movies Ultra', "Archivo no disponible", 3 , art+'icon.png'))
@@ -1310,47 +1328,173 @@ def playwire(params):
 ##############################  ################################
 
 def openload(params):
-    page_url = params.get("url")
+    plugintools.log('[%s %s] Openload %s' % (addonName, addonVersion, repr(params)))
+
+    try:
+        myurl = params.get("url")
+        if '/f/' in myurl:
+            page_embed = plugintools.find_single_match(myurl,'(https://openload.co/f/.*?/)')
+            myurl = page_embed.replace('/f/','/embed/')
+
+        HTTP_HEADER = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11','Referer': myurl}  # 'Connection': 'keep-alive'
+        
+        r = requests.get(myurl, headers=HTTP_HEADER)
+        data = r.content
+        if 'We are sorry!' in data:
+            xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % ('Movies Ultra', "Archivo no disponible", 3 , art+'icon.png'))
+        else:
+            mylink = get_mylink(data)
+            if set('[<>=!@#$%^&*()+{}":;\']+$').intersection(mylink):
+                time.sleep(2)
+                r = requests.get(myurl, headers=HTTP_HEADER)
+                data = r.content
+                mylink = get_mylink(data)
+                if set('[<>=!@#$%^&*()+{}":;\']+$').intersection(mylink):
+                    time.sleep(2)
+                    r = requests.get(myurl, headers=HTTP_HEADER)
+                    data = r.content
+                    mylink = get_mylink(data)
+            videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(mylink)
+            headers = {'User-Agent': HTTP_HEADER['User-Agent'], 'Referer':myurl}
+            req = urllib2.Request(videoUrl, None, headers)
+            res = urllib2.urlopen(req)
+            videoUrl = res.geturl()
+            res.close()
+            plugintools.play_resolved_url(videoUrl)           
+    except Exception as e:
+        #common.log_utils.log_notice('Exception during openload resolve parse: %s' % e)
+        print("Error", e)
+        raise
+
+def get_mylink(data):
+
+    try:
+        data = data.encode('utf-8')
+    except: pass
+    n = re.findall('<span id="(.*?)">(.*?)</span>', data)
+    print "y",n
+    y = n[0][1]
+    enc_data = HTMLParser().unescape(y)
+    res = []
+    for c in enc_data:
+        j = ord(c)
+        if j >= 33 and j <= 126:
+            j = ((j + 14) % 94)
+            j = j + 33
+        res += chr(j)
+    mylink = ''.join(res)
+    tmp100 = plugintools.find_multiple_matches(data,'<script type="text/javascript">(ﾟωﾟ.*?)</script>')
+    encdata = ''
+    tmpEncodedData = tmp100[0].split('┻━┻')   
+    for tmpItem in tmpEncodedData:  
+        try:
+            encdata += decodeOpenLoad(tmpItem)  
+        except:pass 
+    encnumbers = re.findall('return(.*?);', encdata, re.DOTALL)
+    encnumbers1 = re.findall('(\d+).*?(\d+)', encnumbers[0])[0]
+    encnumbers2 = re.findall('(\d+) \- (\d+)', encnumbers[1])[0]
+    encnumbers4 = re.findall('(\d+)', encnumbers[3])[0]
+
+    number1 = int(encnumbers1[0]) + int(encnumbers1[1])
+    number2 = int(encnumbers2[0]) - int(encnumbers2[1]) + number1
+    number4 = int(encnumbers4[0])
+    number3 = number2 - number4
+
+    print "num1", number1
+    print "num2", number2
+    print "num4", number4
+    print "num3", number3
+    print "a",len(mylink)-number2
+        
+    mynewlink1 = mylink[0:-number2]
+    mynewlink2 = chr(ord(mylink[-number2])+number3)
+    mynewlink3 = mylink[len(mylink)-number2+1:]
+    print "my2", mynewlink1,mynewlink2,mynewlink3
+    mynewlink = mynewlink1+mynewlink2+mynewlink3
+
+    return mynewlink
+        
+def decode(encoded):
+    tab = encoded.split('\\')
+    ret = ''
+    for item in tab:
+        try:
+            ret += chr(int(item, 8))
+        except Exception:
+            ret += item
+    return ret
+
+def base10toN(num, n):
+    num_rep = {10: 'a', 11: 'b', 12: 'c', 13: 'd', 14: 'e', 15: 'f', 16: 'g', 17: 'h', 18: 'i', 19: 'j', 20: 'k',
+                21: 'l', 22: 'm', 23: 'n', 24: 'o', 25: 'p', 26: 'q', 27: 'r', 28: 's', 29: 't', 30: 'u', 31: 'v',
+                32: 'w', 33: 'x', 34: 'y', 35: 'z'}
+    new_num_string = ''
+    current = num
+    while current != 0:
+        remainder = current % n
+        if 36 > remainder > 9:
+            remainder_string = num_rep[remainder]
+        elif remainder >= 36:
+            remainder_string = '(' + str(remainder) + ')'
+        else:
+            remainder_string = str(remainder)
+        new_num_string = remainder_string + new_num_string
+        current = current / n
+    return new_num_string
+
+def decodeOpenLoad(aastring):
+        
+    aastring = aastring.replace("(ﾟДﾟ)[ﾟεﾟ]+(oﾟｰﾟo)+ ((c^_^o)-(c^_^o))+ (-~0)+ (ﾟДﾟ) ['c']+ (-~-~1)+", "")
+    aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ) + (ﾟΘﾟ))", "9")
+    aastring = aastring.replace("((ﾟｰﾟ) + (ﾟｰﾟ))", "8")
+    aastring = aastring.replace("((ﾟｰﾟ) + (o^_^o))", "7")
+    aastring = aastring.replace("((c^_^o)-(c^_^o))", "0")
+    aastring = aastring.replace("((ﾟｰﾟ) + (ﾟΘﾟ))", "5")
+    aastring = aastring.replace("(ﾟｰﾟ)", "4")
+    aastring = aastring.replace("((o^_^o) - (ﾟΘﾟ))", "2")
+    aastring = aastring.replace("(o^_^o)", "3")
+    aastring = aastring.replace("(ﾟΘﾟ)", "1")
+    aastring = aastring.replace("(+!+[])", "1")
+    aastring = aastring.replace("(c^_^o)", "0")
+    aastring = aastring.replace("(0+0)", "0")
+    aastring = aastring.replace("(ﾟДﾟ)[ﾟεﾟ]", "\\")
+    aastring = aastring.replace("(3 +3 +0)", "6")
+    aastring = aastring.replace("(3 - 1 +0)", "2")
+    aastring = aastring.replace("(!+[]+!+[])", "2")
+    aastring = aastring.replace("(-~-~2)", "4")
+    aastring = aastring.replace("(-~-~1)", "3")
+    aastring = aastring.replace("(-~0)", "1")
+    aastring = aastring.replace("(-~1)", "2")
+    aastring = aastring.replace("(-~3)", "4")
+    aastring = aastring.replace("(0-0)", "0")
+
+    aastring = aastring.replace("(ﾟДﾟ).ﾟωﾟﾉ", "10")
+    aastring = aastring.replace("(ﾟДﾟ).ﾟΘﾟﾉ", "11")
+    aastring = aastring.replace("(ﾟДﾟ)[\'c\']", "12")
+    aastring = aastring.replace("(ﾟДﾟ).ﾟｰﾟﾉ", "13")
+    aastring = aastring.replace("(ﾟДﾟ).ﾟДﾟﾉ", "14")
+    aastring = aastring.replace("(ﾟДﾟ)[ﾟΘﾟ]", "15")
     
-    if '/f/' in page_url:
-        #https://openload.co/f/zJZ9sxx7zB8/AnatGr3y.s12e20HDiTunes.YK.avi
-        page_embed = plugintools.find_single_match(page_url,'(https://openload.co/f/.*?/)')
-        page_url = page_embed.replace('/f/','/embed/')
-        #https://openload.co/embed/zJZ9sxx7zB8/
-    r = requests.get(page_url)
-    data = r.content
-    if 'We are sorry!' in data:
-        xbmc.executebuiltin("Notification(%s,%s,%i,%s)" % ('Movies Ultra', "Archivo no disponible", 3 , art+'icon.png'))
-    else:
-        from HTMLParser import HTMLParser
-        m = re.search(r'<span id="hiddenurl">(.+?)<\/span>', data)
-        if not m:
-            raise Exception("Video link encrypted data is not available.")
-        enc_data = m.group(1).strip()
-        enc_data = HTMLParser().unescape(enc_data)
-        # print enc_data
-        res = []
-        for c in enc_data:
-            j = ord(c)
-            if j >= 33 and j <= 126:
-                j = ((j + 14) % 94) + 33
-            res += chr(j)
-        num = re.search('CodeAt\(0\).*\(([0-9]+?)\)[^0-9]',data, re.IGNORECASE)
-        if num:
-            print ("NUM",num.group(1),int(num.group(1)))
-        mynum = 3
-        res = res[:-1] + [chr(ord(res[-1])+int(mynum))]
-        print "",res
-        print num.group(1)
-        videoUrl = 'https://openload.co/stream/{0}?mime=true'.format(''.join(res))
-        dtext = videoUrl.replace('https', 'http')
-        headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0'}
-        req = urllib2.Request(dtext, None, headers)
-        res = urllib2.urlopen(req)
-        media_url = res.geturl()
-        res.close()
-        print '$'*53+'- Movies Ultra -'+'$'*53,media_url,'$'*125
-        plugintools.play_resolved_url(media_url)
+    decodestring = re.search(r"\\\+([^(]+)", aastring, re.DOTALL | re.IGNORECASE).group(1)
+    decodestring = "\\+" + decodestring
+    decodestring = decodestring.replace("+", "")
+    decodestring = decodestring.replace(" ", "")
+
+    decodestring = decode(decodestring)
+    decodestring = decodestring.replace("\\/", "/")
+
+    if 'toString' in decodestring:
+        base = re.compile(r"toString\(a\+(\d+)", re.DOTALL | re.IGNORECASE).findall(decodestring)[0]
+        base = int(base)
+        match = re.compile(r"(\(\d[^)]+\))", re.DOTALL | re.IGNORECASE).findall(decodestring)
+        for repl in match:
+            match1 = re.compile(r"(\d+),(\d+)", re.DOTALL | re.IGNORECASE).findall(repl)
+            base2 = base + int(match1[0][0])
+            repl2 = base10toN(int(match1[0][1]), base2)
+            decodestring = decodestring.replace(repl, repl2)
+        decodestring = decodestring.replace("+", "")
+        decodestring = decodestring.replace("\"", "")
+    return decodestring
 
 
 def youtube(params):
