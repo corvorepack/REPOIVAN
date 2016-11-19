@@ -1,0 +1,1 @@
+plugin://plugin.video.live.streamspro/?url=%24doregex%5Bget_rtmp%5D&mode=17&regexs=%7Bu%27get_rtmp%27%3A%20%7B%27expres%27%3A%20u%22%24pyFunction%3Avipracing.decrypt_vipracing%28%27http%3A//www.streamlive.to/embedplayer_new2.php%3Fchannel%3DNUM_CHANNEL%27%2CFalse%2CFalse%2C%27http%3A//vipracing.info/%27%29%22%2C%20%27name%27%3A%20u%27get_rtmp%27%2C%20%27page%27%3A%20None%7D%7D

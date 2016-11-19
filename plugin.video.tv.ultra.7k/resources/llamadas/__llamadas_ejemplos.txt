@@ -1,0 +1,103 @@
+******************************************************************************
+¡¡¡¡OJO!!!! las variables hay que ponerlas como en los ejemplos, EN MAYUSCULAS
+******************************************************************************
+
+
+
+
+***********PORDEDE PELICULAS************************
+llamada:pordede_peli; NOM_PELI=1492-conquest-of-paradise
+
+
+
+***********PORDEDE SERIES************************
+llamada:pordede_series; NOM_SERIE=the-walking-dead
+
+
+
+***********VIMEO************************
+llamada:vimeo; COD_VIDEO=32417524
+
+
+
+
+
+***********SERIESBLANCO************************
+llamada:seriesblanco; NOM_SERIE=the-walking-dead
+
+
+
+
+**************GAMOVIDEO*********************
+Web Ejemplo: http://www.gamovideo.com/onjrutlxlz0o
+
+llamada:gamovideo; ID_VIDEOGAMO=onjrutlxlz0o
+
+
+
+
+**************VAUGHAN************************
+llamada:vaughan; NOM_CANAL=live_cinescape
+
+
+
+***************LLamadas a diversas Webs de TV*************
+llamada:general_webs; NOM_WEB=http://verdirectotv.com/tv/documentales2/historia.html; MI_REF=http://verdirectotv.com/
+
+
+
+
+
+
+**********************LLamadas a las emisiones Oficiales de MiTele**********************
+#EXTINF:-1,Pruebas MiTele
+llamada:mitele; NOM_CANAL=telecinco
+
+#EXTINF:-1,Pruebas MiTele
+llamada:mitele; NOM_CANAL=cuatro
+
+#EXTINF:-1,Pruebas MiTele
+llamada:mitele; NOM_CANAL=bemad
+
+#EXTINF:-1,Pruebas MiTele
+llamada:mitele; NOM_CANAL=8tv
+
+
+***************LLamadas Streamlive.to (Ahora son Premium)*************
+pongamos que tenemos este: http://www.streamlive.to/embed/72400&width=653&height=410&autoplay=true
+llamada:streamlive; NUM_CHANNEL=72400
+
+o esta: http://www.streamlive.to/embedplayer_new2.php?channel=38768
+llamada:streamlive; NUM_CHANNEL=38768
+
+**Ojo!!! si es para los VipRacing, aunque os sirve, teneis que buscar en el código de la web el numero del canal stramlive,
+**Asi que para eso os recomiendo la llamada del Último de mis SportsDevil (27-05-16):   devil:http://vipracing.tv/channel/opcion-1 referer=http://vipracing.tv/
+
+
+
+***************LLamadas AMFVideos*************
+ejemplo: http://www.discoverymax.marca.com/series/supervivencia/wild-frank/episodios-completos/#3675729404001  (Genera un video tipo AMF que el reproductor  de Kodi no puede con él.
+
+llamada:amfvideos; NOM_URL=http://www.discoverymax.marca.com/series/supervivencia/wild-frank/episodios-completos/; COD_VIDEO=3675729404001 
+
+
+
+
+**************LLamada a VIMEO CANALES con su Lista de VIDEOS************
+ejemplos... Tenemos este: https://vimeo.com/channels/musicvideoland/videos/
+
+la última barra "/" la quitais (si tiene) y haceis la llamada a partir de "https://vimeo.com/"
+quedaría así:
+
+#EXTINF:-1,Prueba VimeoCanalesVideos 1
+llamada:vimeo_canal; CANAL_VIDEOS=channels/musicvideoland/videos
+
+
+otro tipo: https://vimeo.com/user17189599/videos
+quedaría así:
+
+#EXTINF:-1,Prueba VimeoCanalesVideos 2
+llamada:vimeo_canal; CANAL_VIDEOS=user17189599/videos
+
+
+
