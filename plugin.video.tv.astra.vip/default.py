@@ -143,7 +143,7 @@ from resources.tools.ourmatch import *
 from resources.tools.lsfr import *
 from resources.tools.chollotv import *
 from resources.tools.lnfstv import *
-from resources.tools.arena_dmo import *
+from resources.tools.arena_dmax import *
 from resources.tools.tumarcador import *
 
 
