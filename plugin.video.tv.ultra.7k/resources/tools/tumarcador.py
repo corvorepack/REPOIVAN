@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #------------------------------------------------------------
-#
+# PalcoTV Parser de TuMarcador.xyz by 
 # Version 0.0.1 (10-09-2016)
 #------------------------------------------------------------
 # License: GPL (http://www.gnu.org/licenses/gpl-3.0.html)
@@ -35,14 +35,14 @@ addonPath           = xbmcaddon.Addon().getAddonInfo("path")
 
 
 
-parser="[COLOR skyblue][B]TuMarcador  [COLOR orange]ExclusivexPM  [COLOR skyblue][/B][/COLOR]"
+parser="[COLOR skyblue][B]Eventos Deportivos TuMarcador  [COLOR orange]  [COLOR skyblue][/B][/COLOR]"
 autor="[COLOR yellow][B][I][/I][/B][/COLOR]"
 url_ref = "http://tumarcador.xyz/"
 #url_montada = 'plugin://plugin.video.SportsDevil/?mode=1&amp;item=catcher%3dstreams%26url=MI_CANAL%26referer='+url_ref
 #url_montada = 'plugin://plugin.video.live.streamspro/?url=%24doregex%5Bget-m3u8%5D&amp;mode=17&amp;regexs=%7Bu%27get-m3u8%27%3A%20%7B%27expres%27%3A%20u%27%23%24pyFunction%5Cndef%20GetLSProData%28page_data%2CCookie_Jar%2Cm%29%3A%5Cn%5Cn%20import%20requests%5Cn%20import%20re%5Cn%5Cn%20headers%20%3D%20%7B%5C%27User-Agent%5C%27%3A%20%5C%27Mozilla/5.0%20%28X11%3B%20Linux%20i686%3B%20rv%3A44.0%29%20Gecko/20100101%20Firefox/44.0%20Iceweasel/44.0%5C%27%2C%20%5C%27Referer%5C%27%3A%20%5C%27%5C%27%7D%5Cn%5Cn%20source%20%3D%20requests.get%28%5C%27MI_CANAL%5C%27%2C%20headers%3Dheaders%29%5Cn%20streamfn%20%3D%20re.findall%28%5C%27source%3A%20%28.%2A%3F%29%5C%5C%28%5C%27%2C%20source.text%29%5B0%5D%5Cn%20formula1%20%3D%20re.search%28r%5C%27function%20%5C%27%20%2B%20streamfn%20%2B%20%5C%27.%2A%5C%5Cn.%2A%5C%5C%5B%28.%2A%3F%29%5C%5C%5D.join.%2A%3F%5C%5C%2B%20%28.%2A%3F%29.join.%2A%3FById%5C%5C%28%22%28.%2A%3F%29%22%5C%27%2C%20source.text%29%5Cn%20par1%20%3D%20formula1.group%281%29.replace%28%5C%27%5C%5C%22%5C%27%2C%20%5C%27%5C%27%29.replace%28%5C%27%2C%5C%27%2C%20%5C%27%5C%27%29.replace%28%5C%27%5C%5C%5C%5C/%5C%27%2C%20%5C%27/%5C%27%29%5Cn%20prepar2%20%3D%20re.findall%28%5C%27var%20%5C%27%20%2B%20formula1.group%282%29%20%2B%20%5C%27.%2A%3F%5C%5C%5B%28%22.%2A%3F%29%5C%5C%5D%5C%27%2C%20source.text%29%5B0%5D%5Cn%20par2%20%3D%20prepar2.replace%28%5C%27%5C%5C%22%5C%27%2C%20%5C%27%5C%27%29.replace%28%5C%27%2C%5C%27%2C%20%5C%27%5C%27%29.replace%28%5C%27%5C%5C%5C%5C/%5C%27%2C%20%5C%27/%5C%27%29%5Cn%20par3%20%3D%20re.findall%28%5C%27id%3D%5C%27%20%2B%20formula1.group%283%29%20%2B%20%5C%27%3E%28.%2A%3F%29%3C%5C%27%2C%20source.text%29%5B0%5D%5Cn%5Cn%20finalm3u8%3D%20par1%20%2B%20par2%20%2Bpar3%5Cn%20return%20finalm3u8%5Cn%5Cn%27%2C%20%27name%27%3A%20u%27get-m3u8%27%2C%20%27page%27%3A%20None%7D%7D'
 #url_montada = 'plugin://plugin.video.live.streamspro/?url=%24doregex%5Bget-m3u8%5D&mode=17&regexs=%7Bu%27get-m3u8%27%3A%20%7B%27expres%27%3A%20u%27%23%24pyFunction%5Cndef%20GetLSProData%28page_data%2CCookie_Jar%2Cm%29%3A%5Cn%5Cn%20import%20requests%5Cn%20import%20re%5Cn%5Cn%20headers%20%3D%20%7B%5C%27User-Agent%5C%27%3A%20%5C%27Mozilla/5.0%20%28X11%3B%20Linux%20i686%3B%20rv%3A44.0%29%20Gecko/20100101%20Firefox/44.0%20Iceweasel/44.0%5C%27%2C%20%5C%27Referer%5C%27%3A%20%5C%27%5C%27%7D%5Cn%5Cn%20source%20%3D%20requests.get%28%5C%27MI_CANAL%5C%27%2C%20headers%3Dheaders%29%5Cn%20streamfn%20%3D%20re.findall%28%5C%27source%3A%20%28.%2A%3F%29%5C%5C%28%5C%27%2C%20source.text%29%5B0%5D%5Cn%20formula1%20%3D%20re.search%28r%5C%27function%20%5C%27%20%2B%20streamfn%20%2B%20%5C%27.%2A%5C%5Cn.%2A%5C%5C%5B%28.%2A%3F%29%5C%5C%5D.join.%2A%3F%5C%5C%2B%20%28.%2A%3F%29.join.%2A%3FById%5C%5C%28%22%28.%2A%3F%29%22%5C%27%2C%20source.text%29%5Cn%20par1%20%3D%20formula1.group%281%29.replace%28%5C%27%5C%5C%22%5C%27%2C%20%5C%27%5C%27%29.replace%28%5C%27%2C%5C%27%2C%20%5C%27%5C%27%29.replace%28%5C%27%5C%5C%5C%5C/%5C%27%2C%20%5C%27/%5C%27%29%5Cn%20prepar2%20%3D%20re.findall%28%5C%27var%20%5C%27%20%2B%20formula1.group%282%29%20%2B%20%5C%27.%2A%3F%5C%5C%5B%28%22.%2A%3F%29%5C%5C%5D%5C%27%2C%20source.text%29%5B0%5D%5Cn%20par2%20%3D%20prepar2.replace%28%5C%27%5C%5C%22%5C%27%2C%20%5C%27%5C%27%29.replace%28%5C%27%2C%5C%27%2C%20%5C%27%5C%27%29.replace%28%5C%27%5C%5C%5C%5C/%5C%27%2C%20%5C%27/%5C%27%29%5Cn%20par3%20%3D%20re.findall%28%5C%27id%3D%5C%27%20%2B%20formula1.group%283%29%20%2B%20%5C%27%3E%28.%2A%3F%29%3C%5C%27%2C%20source.text%29%5B0%5D%5Cn%5Cn%20finalm3u8%3D%20par1%20%2B%20par2%20%2Bpar3%5Cn%20return%20finalm3u8%5Cn%5Cn%27%2C%20%27name%27%3A%20u%27get-m3u8%27%2C%20%27page%27%3A%20None%7D%7D'
-url_montada = 'plugin://plugin.video.live.streamspro/?url=plugin%3A%2F%2Fplugin.video.f4mTester%2F%3Fstreamtype%3DHLS%26url%3D%24doregex%5BgetUrl%5D&mode=17&regexs=%7Bu%27getUrl%27%3A%20%7B%27expres%27%3A%20u%27%23%24pyFunction%5Cndef%20GetLSProData%28page_data%2CCookie_Jar%2Cm%2Curl%20%3D%20%5C%27MI_CANAL%5C%27%29%3A%5Cn%20import%20requests%2C%20re%2C%20base64%5Cn%20headers%3D%7B%5C%27Referer%5C%27%3A%5C%27http%3A//tumarcador.xyz/%5C%27%7D%5Cn%20page%3Drequests.get%28url%2Cheaders%3Dheaders%29.text%5Cn%20tt%3Dre.findall%28%5C%27return%5C%5C%28%5C%5C%5B%22%28%5B%5E%5C%5C%5D%5D%2B%29%5C%27%2Cpage%29%5B0%5D%5Cn%20var1%3Dre.findall%28%5C%27%5C%5C%2B%20%28.%2A%3F%29%5C%5C.join%5C%27%2Cpage%29%5B0%5D%5Cn%20var11%3Dre.findall%28%5C%27var%20%25s%20%3D%20%5C%5C%5B%22%28%5B%5E%5C%5C%5D%5D%2B%29%5C%27%25%20var1%2Cpage%29%5B0%5D%5Cn%20var2%3Dre.findall%28%5C%27%5C%5C%2B%20document%5C%5C.getElementById%5C%5C%28%22%28%5B%5E%22%5D%2B%29%5C%27%2Cpage%29%5B0%5D%5Cn%20varid%3Dre.findall%28%5C%27id%3D%25s%3E%28%5B%5E%3C%5D%2B%29%5C%27%25%20var2%2Cpage%29%5B0%5D%5Cn%20tt%3Dtt.replace%28%5C%27%22%5C%27%2C%20%5C%27%5C%27%29.replace%28%5C%27%5C%5C/%5C%27%2C%20%5C%27/%5C%27%29.replace%28%5C%27%2C%5C%27%2C%20%5C%27%5C%27%29%5Cn%20var11%3Dvar11.replace%28%5C%27%22%5C%27%2C%20%5C%27%5C%27%29.replace%28%5C%27%5C%5C/%5C%27%2C%20%5C%27/%5C%27%29.replace%28%5C%27%2C%5C%27%2C%20%5C%27%5C%27%29%5Cn%20%23print%20tt%20%2B%20var11%20%2B%20varid%5Cn%20return%20tt%20%2B%20var11%20%2B%20varid%5Cn%27%2C%20%27cookiejar%27%3A%20%27%27%2C%20%27name%27%3A%20u%27getUrl%27%2C%20%27page%27%3A%20None%7D%7D'
-
+#url_montada = 'plugin://plugin.video.live.streamspro/?url=plugin%3A%2F%2Fplugin.video.f4mTester%2F%3Fstreamtype%3DHLS%26url%3D%24doregex%5BgetUrl%5D&mode=17&regexs=%7Bu%27getUrl%27%3A%20%7B%27expres%27%3A%20u%27%23%24pyFunction%5Cndef%20GetLSProData%28page_data%2CCookie_Jar%2Cm%2Curl%20%3D%20%5C%27MI_CANAL%5C%27%29%3A%5Cn%20import%20requests%2C%20re%2C%20base64%5Cn%20headers%3D%7B%5C%27Referer%5C%27%3A%5C%27http%3A//tumarcador.xyz/%5C%27%7D%5Cn%20page%3Drequests.get%28url%2Cheaders%3Dheaders%29.text%5Cn%20tt%3Dre.findall%28%5C%27return%5C%5C%28%5C%5C%5B%22%28%5B%5E%5C%5C%5D%5D%2B%29%5C%27%2Cpage%29%5B0%5D%5Cn%20var1%3Dre.findall%28%5C%27%5C%5C%2B%20%28.%2A%3F%29%5C%5C.join%5C%27%2Cpage%29%5B0%5D%5Cn%20var11%3Dre.findall%28%5C%27var%20%25s%20%3D%20%5C%5C%5B%22%28%5B%5E%5C%5C%5D%5D%2B%29%5C%27%25%20var1%2Cpage%29%5B0%5D%5Cn%20var2%3Dre.findall%28%5C%27%5C%5C%2B%20document%5C%5C.getElementById%5C%5C%28%22%28%5B%5E%22%5D%2B%29%5C%27%2Cpage%29%5B0%5D%5Cn%20varid%3Dre.findall%28%5C%27id%3D%25s%3E%28%5B%5E%3C%5D%2B%29%5C%27%25%20var2%2Cpage%29%5B0%5D%5Cn%20tt%3Dtt.replace%28%5C%27%22%5C%27%2C%20%5C%27%5C%27%29.replace%28%5C%27%5C%5C/%5C%27%2C%20%5C%27/%5C%27%29.replace%28%5C%27%2C%5C%27%2C%20%5C%27%5C%27%29%5Cn%20var11%3Dvar11.replace%28%5C%27%22%5C%27%2C%20%5C%27%5C%27%29.replace%28%5C%27%5C%5C/%5C%27%2C%20%5C%27/%5C%27%29.replace%28%5C%27%2C%5C%27%2C%20%5C%27%5C%27%29%5Cn%20%23print%20tt%20%2B%20var11%20%2B%20varid%5Cn%20return%20tt%20%2B%20var11%20%2B%20varid%5Cn%27%2C%20%27cookiejar%27%3A%20%27%27%2C%20%27name%27%3A%20u%27getUrl%27%2C%20%27page%27%3A%20None%7D%7D'
+url_montada = 'plugin://plugin.video.live.streamspro/?url=plugin%3A%2F%2Fplugin.video.f4mTester%2F%3Fstreamtype%3DHLS%26url%3D%24doregex%5BgetUrl%5D&mode=17&regexs=%7Bu%27getUrl%27%3A%20%7B%27cookiejar%27%3A%20%27%27%2C%20%27expres%27%3A%20u%27%23%24pyFunction%5Cnimport%20requests%2C%20re%20%2C%20urllib%5Cndef%20GetLSProData%28page_data%2CCookie_Jar%2Cm%2Curl%20%3D%20%5C%27MI_CANAL%5C%27%29%3A%5Cn%20headers%3D%7B%5C%27Referer%5C%27%3A%5C%27http%3A//tumarcador.xyz/%5C%27%7D%5Cn%20page%3Drequests.get%28url%2Cheaders%3Dheaders%29.text%5Cn%20tt%3Dre.findall%28%5C%27source%20src%3D%22%28.%2A%3F%29%22%5C%27%2Cpage%29%5B0%5D%5Cn%20link%20%3D%20re.findall%28%5C%27%28http.%2A%3F%29playlist%5C%27%2Ctt%29%5B0%5D%5Cn%20headers%3D%7B%5C%27Referer%5C%27%3A%5C%27http%3A//tumarcador.xyz/canal4%5C%27%7D%5Cn%20page%3Drequests.get%28tt%2Cheaders%3Dheaders%29.text%5Cn%20var1%3Dre.findall%28%5C%27%28%3Fs%29%28chunks.%2A%3F%29%5C%5Cn%5C%27%2Cpage%29%5B0%5D%20%5Cn%20var1%3Dvar1.replace%28%5C%27%26%5C%27%2C%20%5C%27%2526%5C%27%29%5Cn%20var11%3Dlink%20%2B%20var1%5Cn%20return%20var11%20%2B%20urllib.quote_plus%28%5C%27%7CReferer%3Dhttp%3A//tumarcador.xyz/canal4%26amp%3BUser-Agent%3DMozilla/5.0%26amp%3BConnection%3Dkeep-alive%26amp%3BAccept%3D%2A/%2A%5C%27%29%5Cn%27%2C%20%27referer%27%3A%20None%2C%20%27name%27%3A%20u%27getUrl%27%2C%20%27page%27%3A%20None%7D%7D'
 url = "http://tumarcador.xyz"
 
 guia = "http://pastebin.com/raw/WsSGX20D"
@@ -64,16 +64,18 @@ def tumarcador0(params):
 	logo = "https://pbs.twimg.com/profile_images/1851363673/logo.jpg"
 	fondo = "https://i.ytimg.com/vi/-cF0sCnB6tc/maxresdefault.jpg"
 	
-	plugintools.add_item(action="",url="",title="               "+parser+autor,thumbnail="https://dl.dropbox.com/s/m3ef0irmyqb0b6k/tv%20ultra%20logo%202.png?dl=0",fanart=fondo,folder=False,isPlayable=False)
+	plugintools.add_item(action="",url="",title="         "+parser+autor,thumbnail="https://dl.dropbox.com/s/m3ef0irmyqb0b6k/tv%20ultra%20logo%202.png?dl=0",fanart=fondo,folder=False,isPlayable=False)
 	plugintools.add_item(action="",url="",title="",thumbnail=logo, fanart=fondo, folder=False, isPlayable=False)
 	
+	'''
+	if plataforma == "android":
+		plugintools.add_item(action="runPlugin",url=lanza_motor,title="[COLOR red]- Activar Motor Acestream -[/COLOR]",thumbnail="http://i.imgur.com/ULiNjQM.png",fanart=fanart,folder=False,isPlayable=True)
+	'''
 	
-	
-	plugintools.add_item(action="zap_marcador",url="",title="[COLOR white][B]- Lista de Canales -[/COLOR][/B]",thumbnail="https://dl.dropbox.com/s/m3ef0irmyqb0b6k/tv%20ultra%20logo%202.png?dl=0",fanart=fondo,folder=True,isPlayable=False)
-	plugintools.add_item(action="muestra_guia",url="",title="[COLOR red][B]- Mostrar Guía en Imagenes -[/COLOR][/B]",thumbnail="https://dl.dropbox.com/s/m3ef0irmyqb0b6k/tv%20ultra%20logo%202.png?dl=0",fanart=fondo,folder=True,isPlayable=False)
-	
+	plugintools.add_item(action="zap_marcador",url="",title="[COLOR white][B]- Listade Canales -[/COLOR][/B]",thumbnail="https://dl.dropbox.com/s/m3ef0irmyqb0b6k/tv%20ultra%20logo%202.png?dl=0",fanart=fondo,folder=True,isPlayable=False)
+	plugintools.add_item(action="muestra_guia",url="",title="[COLOR red][B]- Mostrar Guía en Imagenes -[/COLOR][/B]",thumbnail="http://i.imgur.com/BNQwcS6.png",fanart=fondo,folder=True,isPlayable=False)
 
-	#***********  Control de Diferencias Horarias  *******************
+	#***********  Control de Diferencias Horarias  15-10-16  *******************
 	if not os.path.exists(fich_hora):
 		diferencia = "00:00"
 		file_hora=open(fich_hora, "w+")
@@ -83,7 +85,7 @@ def tumarcador0(params):
 		file_hora=open(fich_hora, "r")
 		diferencia = file_hora.read()
 		file_hora.close()
-	#***********  Control de Diferencias Horarias   *******************
+	#***********  Control de Diferencias Horarias  15-10-16  *******************
 
 	diferencia = diferencia + ":00"
 	dias = plugintools.find_multiple_matches(data,'<dia>(.*?)<fin dia>')
@@ -106,7 +108,7 @@ def tumarcador0(params):
 			logo_ext = plugintools.find_single_match(linea,'<logo>(.*?)<')
 
 			if len(hora) > 0:
-				#***********  Control de Diferencias Horarias  *******************
+				#***********  Control de Diferencias Horarias  15-10-16  *******************
 				hora_esp = hora.replace("[COLOR lightblue]","").replace("h[/COLOR]","").strip()
 				hora_esp = hora_esp + ":00"  # Añado los segundos
 				hora_dif = diferencia + ":00"  # Añado los segundos
@@ -141,7 +143,7 @@ def tumarcador0(params):
 				
 				hora="[COLOR lightblue]" + resultado.strftime("%H:%M:%S") + "h[/COLOR]"
 				hora = hora.replace(":00h","h")
-				#***********  Control de Diferencias Horarias   *******************
+				#***********  Control de Diferencias Horarias  15-10-16  *******************
 			
 			#if len(canal) > 1:
 			canal2 = canal.replace(">" , "").replace("<" , "").replace("-Acestream" , "a-Acestream")
@@ -217,7 +219,7 @@ def cambia_hora_marcador(params):
 		file_hora=open(fich_hora, "w+")
 		file_hora.write(pide)
 		file_hora.close()
-		xbmcgui.Dialog().ok( "- Tenga en Cuenta -" , "Para que el cambio tenga efecto en la Guía, tendrá que salir de la seccion y volver a entrar." )
+		xbmcgui.Dialog().ok( "- Tenga en Cuenta -" , "Para que el cambio tenga efecto en la Guía, tendrá que salir del Parser y volver a entrar." )
 
 	return
 
@@ -257,7 +259,7 @@ def zap_marcador(params):
 	r=requests.get(url)
 	data = r.content
 
-	plugintools.add_item(action="",url="",title="               [COLOR skyblue][B]Canales de "+parser+autor,thumbnail=logo,fanart=fondo,folder=False,isPlayable=False)
+	plugintools.add_item(action="",url="",title="               [COLOR skyblue][B]Lista de canales de "+parser+autor,thumbnail=logo,fanart=fondo,folder=False,isPlayable=False)
 	plugintools.add_item(action="",url="",title="",thumbnail=logo, fanart=fondo, folder=False, isPlayable=False)
 	
 

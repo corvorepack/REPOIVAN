@@ -28,7 +28,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tv.astra.vip" name="[COLOR blue][B]TV Astra + VIP [/B][/COLOR]" version="6.2.1" provider-name="Portal Mixto +">
+<addon id="plugin.video.tv.astra.vip" name="[COLOR blue][B]TV Astra + VIP [/B][/COLOR]" version="6.2.3" provider-name="Portal Mixto +">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="plugin.video.youtube" optional="true"/>
@@ -56,7 +56,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.tv.ultra.7k" name="[COLOR blue][B]TV [COLOR white]Ultra[COLOR blue] 7K [COLOR white]+[/B][/COLOR]" version="6.2.0" provider-name="Portal Mixto">
+<addon id="plugin.video.tv.ultra.7k" name="[COLOR blue][B]TV [COLOR white]Ultra[COLOR blue] 7K [COLOR white]+[/B][/COLOR]" version="6.2.3" provider-name="Portal Mixto">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="plugin.video.youtube" optional="true"/>

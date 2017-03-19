@@ -67,12 +67,11 @@ def arena_dmax0(params):
 	r=requests.get(url_agenda, headers=headers)
 	data = r.content
 
-	plugintools.add_item(action="",url="",title="[COLOR blue][B]Eventos Deportivos ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail="http://s15.postimg.org/bicwnygez/ARENAVISION.jpg",fanart=fanart,folder=False,isPlayable=False)
+	plugintools.add_item(action="",url="",title="[COLOR blue][B]ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I] [/I][/COLOR]",thumbnail="http://s15.postimg.org/bicwnygez/ARENAVISION.jpg",fanart=fanart,folder=False,isPlayable=False)
 	plugintools.add_item(action="",url="",title="",thumbnail="http://static.wixstatic.com/media/41d000_0ba0b768e7c98113d7fb91b13075748d.png_srz_980_236_85_22_0.50_1.20_0.00_png_srz", fanart=fanart, folder=False, isPlayable=False)
 
-	
 
-	plugintools.add_item(action="arenazaping",url="",title="[COLOR orange][B]- Lista de Canales Arenavision -[/COLOR][/B]",thumbnail="http://i.imgur.com/IdjjIKU.png",fanart="https://dl.dropbox.com/s/rhotjf4qw9gb3o7/sports-wallpapers-7728262.jpg?dl=0",folder=True,isPlayable=False)
+	plugintools.add_item(action="arenazaping",url="",title="[COLOR orange][B]- Lista de canales -[/COLOR][/B]",thumbnail="http://i.imgur.com/IdjjIKU.png",fanart="https://dl.dropbox.com/s/rhotjf4qw9gb3o7/sports-wallpapers-7728262.jpg?dl=0",folder=True,isPlayable=False)
 
 	plugintools.add_item(action="",url="",title="",thumbnail="http://static.wixstatic.com/media/41d000_0ba0b768e7c98113d7fb91b13075748d.png_srz_980_236_85_22_0.50_1.20_0.00_png_srz", fanart=fanart, folder=False, isPlayable=False)
 	'''
@@ -83,7 +82,7 @@ def arena_dmax0(params):
 	'''
 	lineas = plugintools.find_multiple_matches(data,'<tr><td(.*?)</tr>')
 
-	#***********  Control de Diferencias Horarias  15-10-16  *******************
+	#***********  Control de Diferencias Horarias   15-10-16  *******************
 	if not os.path.exists(fich_hora):
 		diferencia = "00:00"
 		file_hora=open(fich_hora, "w+")
@@ -93,7 +92,7 @@ def arena_dmax0(params):
 		file_hora=open(fich_hora, "r")
 		diferencia = file_hora.read()
 		file_hora.close()
-	#***********  Control de Diferencias Horarias  15-10-16  *******************
+	#***********  Control de Diferencias Horarias   15-10-16  *******************
 
 	diferencia = diferencia + ":00"
 	
@@ -165,7 +164,7 @@ def arena_dmax0(params):
 						#cuenta = 2
 						
 			elif cuenta == 2:  # Hora
-				#***********  Control de Diferencias Horarias  15-10-16  *******************
+				#***********  Control de Diferencias Horarias   15-10-16  *******************
 				hora_esp = texto.replace(" CET","").strip()
 				#plugintools.log("**************************HoraEsp "+hora_esp)
 				#10:59:58 T:3140  NOTICE: **************************HoraEsp Â 02:00:00
@@ -219,7 +218,7 @@ def arena_dmax0(params):
 					
 					hora="[COLOR lightblue]" + resultado.strftime("%H:%M:%S") + "h[/COLOR]"
 					hora = hora.replace(":00h","h")
-					#***********  Control de Diferencias Horarias  15-10-16  *******************
+					#***********  Control de Diferencias Horarias   15-10-16  *******************
 				except:
 					hora="[COLOR lightblue]Mal Definida[/COLOR]"
 					
@@ -274,7 +273,7 @@ def arena_pon_canales(params):
 	canales = params.get("url")
 	title = params.get("title")
 
-	plugintools.add_item(action="",url="",title="[COLOR blue][B] Eventos Deportivos ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=False)
+	plugintools.add_item(action="",url="",title="[COLOR blue][B] ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=False)
 	plugintools.add_item(action="",url="",title="",thumbnail=thumbnail, fanart=fanart, folder=False, isPlayable=False)
 
 	plugintools.add_item(action="",url="",title=title,thumbnail=thumbnail, fanart=fanart, folder=False, isPlayable=False)
@@ -309,6 +308,10 @@ def arena_pon_canales(params):
 				canal = item2
 			
 			#http://www.arenavision.in/av1
+			plugintools.log("********************CANAL: "+canal+"***********************")	
+			canal =canal.replace(" " , "")
+			if canal == "1" or canal == "2":
+				canal = "O" + canal
 			url = "http://www.arenavision.in/av"+canal
 			'''
 			plugintools.log("********************URL: "+url+"***********************")	
@@ -328,6 +331,7 @@ def busca_aces(url):
 	headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0', "Referer": url, "cookie": "beget=begetok"}
 	r=requests.get(url, headers=headers)
 	data = r.content
+	plugintools.log("********************URL: "+url+"***********************")	
 	
 	linkace = plugintools.find_single_match(data,'href="acestream(.*?)"')
 	
@@ -346,12 +350,16 @@ def arenazaping(params):
 	fanart = params.get("fanart")
 	thumbnail = params.get("thumbnail")
 
-	plugintools.add_item(action="",url="",title="[COLOR blue][B]Lista de Canales ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=False)
+	plugintools.add_item(action="",url="",title="[COLOR blue][B]Lista de Canales[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=False)
 	plugintools.add_item(action="",url="",title="",thumbnail=thumbnail, fanart=fanart, folder=False, isPlayable=False)
 
 	i = 1
 	while i < 31:
-		url = "http://www.arenavision.in/av" + str(i)
+		#Parche xq ahora han puesto q el canal 1 y 2, empienzan con la letra "O" 18-03-17
+		if i < 3:
+			url = "http://www.arenavision.in/avO" + str(i)
+		else:	
+			url = "http://www.arenavision.in/av" + str(i)
 		if i < 10:
 			elcanal = "0" + str(i)
 		else:
@@ -370,7 +378,6 @@ def arenazaping(params):
 
 	plugintools.add_item(action="",url="",title="",thumbnail=thumbnail, fanart=fanart, folder=False, isPlayable=False)
 
-	
 	
 
 def lanza_aces(params):
@@ -400,7 +407,7 @@ def arena_sop(params):
 	thumbnail = params.get("thumbnail")
 	title = "          ·····  " + params.get("title").replace("-","") + "  ·····"
 
-	plugintools.add_item(action="",url="",title="[COLOR blue][B]Eventos Deportivos ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=False)
+	plugintools.add_item(action="",url="",title="[COLOR blue][B]ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=False)
 	plugintools.add_item(action="",url="",title="",thumbnail=thumbnail, fanart=fanart, folder=False, isPlayable=False)
 
 	plugintools.add_item(action="",url="",title=title,thumbnail=thumbnail, fanart=fanart, folder=False, isPlayable=False)
