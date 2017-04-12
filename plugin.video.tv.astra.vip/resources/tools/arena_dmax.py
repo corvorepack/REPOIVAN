@@ -39,17 +39,31 @@ addonPath           = xbmcaddon.Addon().getAddonInfo("path")
 thumbnail = 'http://i.imgur.com/IdjjIKU.png'
 fanart = 'https://dl.dropbox.com/s/rhotjf4qw9gb3o7/sports-wallpapers-7728262.jpg?dl=0'
 
-url = 'http://www.arenavision.ru'
-url_ref = 'http://www.arenavision.ru/'
+url = 'http://www.arenavision.in'
+url_ref = 'http://www.arenavision.in/'
 #url_agenda = 'http://arenavision.in/agenda'
-url_agenda = 'http://www.arenavision.ru/schedule'
+url_agenda = 'http://www.arenavision.in/schedule'
 
-
+lanza_motor = "plugin://plugin.program.super.favourites/?label=Ace+Stream+Engine&mode=650&cmd=StartAndroidActivity%28%22org.acestream.media%22%29&image=androidapp%3A%2F%2Fsources%2Fapps%2Forg.acestream.media.png&content_type=executable"
 dicdias={'Monday':'Lunes','Tuesday':'Martes','Wednesday':'Miercoles','Thursday':'Jueves','Friday':'Viernes','Saturday':'Sabado','Sunday':'Domingo'}
 
 version = ""
 
 fich_hora = xbmc.translatePath(os.path.join('special://userdata/addon_data/plugin.video.tv.ultra.7k/horario_arenavision.txt'))
+
+#yA ME he cansado que cambien a diario la url de la Agenda y de los Canales AV1 y AV2... así que he creado un fich en pastebin
+#Donde poder poner estas 3 url y así leerlas desde akí y modificarlas cuando haga falta sin actualizar el parser 10-04-2017
+r0 = requests.get("https://pastebin.com/raw/h2DxxkNu")	
+data0 = r0.content
+
+agenda1 = plugintools.find_single_match(data0,'GUIA>(.*?)<')
+canal1 = plugintools.find_single_match(data0,'CANAL 1>(.*?)<')
+canal2 = plugintools.find_single_match(data0,'CANAL 2>(.*?)<')
+
+if len(agenda1) == 0:
+	url_agenda = 'http://www.arenavision.in/schedule'
+else:
+	url_agenda = agenda1
 
 
 def arena_dmax0(params):
@@ -67,12 +81,10 @@ def arena_dmax0(params):
 	r=requests.get(url_agenda, headers=headers)
 	data = r.content
 
-	plugintools.add_item(action="",url="",title="[COLOR blue][B]Eventos Deportivos ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail="http://s15.postimg.org/bicwnygez/ARENAVISION.jpg",fanart=fanart,folder=False,isPlayable=False)
+	plugintools.add_item(action="",url="",title="[COLOR blue][B]ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail="http://s15.postimg.org/bicwnygez/ARENAVISION.jpg",fanart=fanart,folder=False,isPlayable=False)
 	plugintools.add_item(action="",url="",title="",thumbnail="http://static.wixstatic.com/media/41d000_0ba0b768e7c98113d7fb91b13075748d.png_srz_980_236_85_22_0.50_1.20_0.00_png_srz", fanart=fanart, folder=False, isPlayable=False)
 
-	
-
-	plugintools.add_item(action="arenazaping",url="",title="[COLOR orange][B]- Lista de Canales Arenavision -[/COLOR][/B]",thumbnail="http://i.imgur.com/IdjjIKU.png",fanart="https://dl.dropbox.com/s/rhotjf4qw9gb3o7/sports-wallpapers-7728262.jpg?dl=0",folder=True,isPlayable=False)
+	plugintools.add_item(action="arenazaping",url="",title="[COLOR orange][B]Lista de Canales[/COLOR][/B]",thumbnail="http://i.imgur.com/IdjjIKU.png",fanart="https://dl.dropbox.com/s/rhotjf4qw9gb3o7/sports-wallpapers-7728262.jpg?dl=0",folder=True,isPlayable=False)
 
 	plugintools.add_item(action="",url="",title="",thumbnail="http://static.wixstatic.com/media/41d000_0ba0b768e7c98113d7fb91b13075748d.png_srz_980_236_85_22_0.50_1.20_0.00_png_srz", fanart=fanart, folder=False, isPlayable=False)
 	'''
@@ -165,8 +177,8 @@ def arena_dmax0(params):
 						#cuenta = 2
 						
 			elif cuenta == 2:  # Hora
-				#***********  Control de Diferencias Horarias  15-10-16  *******************
-				hora_esp = texto.replace(" CET","").strip()
+				#***********  Control de Diferencias Horarias DarioMO 15-10-16  *******************
+				hora_esp = texto.replace(" CET","").replace(" CEST","").strip()
 				#plugintools.log("**************************HoraEsp "+hora_esp)
 				#10:59:58 T:3140  NOTICE: **************************HoraEsp Â 02:00:00
 
@@ -219,7 +231,7 @@ def arena_dmax0(params):
 					
 					hora="[COLOR lightblue]" + resultado.strftime("%H:%M:%S") + "h[/COLOR]"
 					hora = hora.replace(":00h","h")
-					#***********  Control de Diferencias Horarias  15-10-16  *******************
+					#***********  Control de Diferencias Horarias DarioMO 15-10-16  *******************
 				except:
 					hora="[COLOR lightblue]Mal Definida[/COLOR]"
 					
@@ -274,14 +286,14 @@ def arena_pon_canales(params):
 	canales = params.get("url")
 	title = params.get("title")
 
-	plugintools.add_item(action="",url="",title="[COLOR blue][B] Eventos Deportivos ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=False)
+	plugintools.add_item(action="",url="",title="[COLOR blue][B]ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=False)
 	plugintools.add_item(action="",url="",title="",thumbnail=thumbnail, fanart=fanart, folder=False, isPlayable=False)
 
 	plugintools.add_item(action="",url="",title=title,thumbnail=thumbnail, fanart=fanart, folder=False, isPlayable=False)
 
 	canales = ">" + canales.replace("]", "];#>").replace("/","")
 	canales_Idioma = plugintools.find_multiple_matches(canales,'>(.*?)#')
-	plugintools.log("************Canales1: "+canales+"**************")
+	#plugintools.log("************Canales1: "+canales+"**************")
 	
 	for item in canales_Idioma:
 		cada_canal = item.split("-")
@@ -308,8 +320,16 @@ def arena_pon_canales(params):
 					linea = "[COLOR orange]Ver en Canal:   [COLOR lightgreen][B]"+item2+idioma+"        [/B][COLOR red][I](Acestream)[/COLOR][/I]"
 				canal = item2
 			
-			#http://www.arenavision.ru/av1
-			url = "http://www.arenavision.ru/av"+canal
+			#http://www.arenavision.in/av1
+			#plugintools.log("********************CANAL: "+canal+"***********************")	
+			canal =canal.replace(" " , "")
+			if canal == "1":
+				url = canal1
+			else:
+				if canal == "2":
+					url = canal2
+				else:
+					url = "http://www.arenavision.in/av"+canal
 			'''
 			plugintools.log("********************URL: "+url+"***********************")	
 			url_montada = 'plugin://plugin.video.SportsDevil/?mode=1&amp;item=catcher%3dstreams%26url='+url+'%26referer='+url_ref
@@ -328,6 +348,7 @@ def busca_aces(url):
 	headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0', "Referer": url, "cookie": "beget=begetok"}
 	r=requests.get(url, headers=headers)
 	data = r.content
+	#plugintools.log("********************URL: "+url+"***********************")	
 	
 	linkace = plugintools.find_single_match(data,'href="acestream(.*?)"')
 	
@@ -346,23 +367,43 @@ def arenazaping(params):
 	fanart = params.get("fanart")
 	thumbnail = params.get("thumbnail")
 
-	plugintools.add_item(action="",url="",title="[COLOR blue][B]Lista de Canales ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=False)
+	plugintools.add_item(action="",url="",title="[COLOR blue][B]Lista de Canales [/B]  [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=False)
 	plugintools.add_item(action="",url="",title="",thumbnail=thumbnail, fanart=fanart, folder=False, isPlayable=False)
 
 	i = 1
 	while i < 31:
-		url = "http://www.arenavision.ru/av" + str(i)
+		#Parche xq ahora han puesto q el canal 1 y 2, empienzan con la letra "O" 18-03-17
+		'''
+		if i < 3:
+			url = "http://www.arenavision.in/avO" + str(i)
+		else:	
+			url = "http://www.arenavision.in/av" + str(i)
+			
 		if i < 10:
 			elcanal = "0" + str(i)
 		else:
 			elcanal = str(i)
-			
+		'''	
+		if i < 10:
+			elcanal = "0" + str(i)
+		else:
+			elcanal = str(i)
+
+		if i == 1:
+			url = canal1
+		else:
+			if i == 2:
+				url = canal2
+			else:
+				url = "http://www.arenavision.in/av" + str(i)
+
+
 		titulo = "[COLOR orange]-Ver Canal " + elcanal + "[/COLOR]"
 
 		laurl = busca_aces(url)
 		if len(laurl) > 0:
 			url_montada = laurl + "&name=" + titulo
-			plugintools.log("********************URL: "+url_montada+"***********************")	
+			#plugintools.log("********************URL: "+url_montada+"***********************")	
 			plugintools.add_item(action="runPlugin",url=url_montada,title=titulo,thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=True)
 
 		#plugintools.add_item(action="lanza_aces",url=url,title=titulo,thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=True)
@@ -370,7 +411,7 @@ def arenazaping(params):
 
 	plugintools.add_item(action="",url="",title="",thumbnail=thumbnail, fanart=fanart, folder=False, isPlayable=False)
 
-	
+	plugintools.add_item(action="runPlugin",title="[COLOR red]-Lista ESPECIAL: [COLOR lightgreen]Torrent-TV.ru[/COLOR]",url="plugin://plugin.video.palcotv/?action=getfile_http&extra&fanart=fanart.jpg&page&pager&plot&thumbnail=https%3a%2f%2f46.101.25.102%2fdmo%2flogospalcomax%2fdocus.jpg&title=Prueba%20001&url=http%3a%2f%2fsuper-pomoyka.us.to%2ftrash%2fttv-list%2fttv.m3u%0a",thumbnail="http://i.imgur.com/uXtdcpx.png",fanart=fanart,folder=True,isPlayable=False)
 	
 
 def lanza_aces(params):
@@ -386,7 +427,7 @@ def lanza_aces(params):
 		#url_montada = url_montada.replace("&mode=1" , "&amp;mode=1")
 		url_montada = laurl + "&name=" + titulo
 		#url_montada = url_montada.replace("&mode=1" , "&amp;mode=1")
-		plugintools.log("********************URL: "+url_montada+"***********************")	
+		#plugintools.log("********************URL: "+url_montada+"***********************")	
 		
 		xbmc.executebuiltin( "PlayMedia("+url_montada+", return)" )
 		#xbmc.executebuiltin('ActivateWindow(10001,'+url_montada+')')
@@ -400,7 +441,7 @@ def arena_sop(params):
 	thumbnail = params.get("thumbnail")
 	title = "          ·····  " + params.get("title").replace("-","") + "  ·····"
 
-	plugintools.add_item(action="",url="",title="[COLOR blue][B]Eventos Deportivos ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=False)
+	plugintools.add_item(action="",url="",title="[COLOR blue][B]ArenaVision[/B]   [I]"+version+"[/I][/COLOR][COLOR yellow][I][/I][/COLOR]",thumbnail=thumbnail,fanart=fanart,folder=False,isPlayable=False)
 	plugintools.add_item(action="",url="",title="",thumbnail=thumbnail, fanart=fanart, folder=False, isPlayable=False)
 
 	plugintools.add_item(action="",url="",title=title,thumbnail=thumbnail, fanart=fanart, folder=False, isPlayable=False)
