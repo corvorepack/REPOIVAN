@@ -57,7 +57,7 @@ dicdias={'Monday':'Lunes','Tuesday':'Martes','Wednesday':'Miercoles','Thursday':
 
 version = "(v0.2.2)"
 
-fich_hora = xbmc.translatePath(os.path.join('special://userdata/addon_data/plugin.video.palcotv/horario_arenavision.txt'))
+fich_hora = xbmc.translatePath(os.path.join('special://userdata/addon_data/plugin.video.tv.ultra.7k/horario_arenavision.txt'))
 
 todos = []
 
